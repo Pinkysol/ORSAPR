@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BiteSDK\BiteSDK.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="KAPITypes">
+      <HintPath>..\KompasAPI\KAPITypes.dll</HintPath>
+    </Reference>
+    <Reference Include="Kompas6API5">
+      <HintPath>..\KompasAPI\Kompas6API5.dll</HintPath>
+    </Reference>
+    <Reference Include="Kompas6Constants">
+      <HintPath>..\KompasAPI\Kompas6Constants.dll</HintPath>
+    </Reference>
+    <Reference Include="Kompas6Constants3D">
+      <HintPath>..\KompasAPI\Kompas6Constants3D.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

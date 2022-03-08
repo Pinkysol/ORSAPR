@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BiteUI", "BiteUI\BiteUI.csproj", "{D604E04A-B15D-4D64-AB84-A93897C25C30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BiteBuilder", "BiteBuilder\BiteBuilder.csproj", "{075F4C0C-4E34-4FE7-87E1-F60FDC1B8702}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiteSDK", "BiteSDK\BiteSDK.csproj", "{DBB1FEDC-132C-4870-8872-C2C336290892}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D604E04A-B15D-4D64-AB84-A93897C25C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D604E04A-B15D-4D64-AB84-A93897C25C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D604E04A-B15D-4D64-AB84-A93897C25C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D604E04A-B15D-4D64-AB84-A93897C25C30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{075F4C0C-4E34-4FE7-87E1-F60FDC1B8702}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{075F4C0C-4E34-4FE7-87E1-F60FDC1B8702}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{075F4C0C-4E34-4FE7-87E1-F60FDC1B8702}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{075F4C0C-4E34-4FE7-87E1-F60FDC1B8702}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBB1FEDC-132C-4870-8872-C2C336290892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBB1FEDC-132C-4870-8872-C2C336290892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBB1FEDC-132C-4870-8872-C2C336290892}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBB1FEDC-132C-4870-8872-C2C336290892}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ABBF99C2-9076-4926-9C5E-B32625DB4ADD}
+	EndGlobalSection
+EndGlobal
