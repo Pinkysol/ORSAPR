@@ -16,7 +16,7 @@ namespace BiteBuilder
             _connector.GetNewPart();
             BuildCylinder(parameters.GetBiteLength(), parameters.GetDiameter());
             BuildHexagon(parameters.GetLengthOfStraightConnector(), parameters.GetDiameter());
-            BuildNozzle(parameters.GetDiameter(), parameters.GetBiteLength(), parameters.GetLengthOfStraightConnector());
+            BuildNozzle(parameters.GetDiameter(), parameters.GetBiteLength(), parameters.GetLengthOfStraightConnector(), parameters.GetLengthOfStraight(), parameters.GetWidthOfAdjoiningPart());
         }
         private void BuildCylinder(double biteLength, double diameter)
         {
@@ -65,7 +65,7 @@ namespace BiteBuilder
             CreateExtrusion(sketchDef, lengthExtrusion, thin: false, side: false);
         }
 
-        private void BuildNozzle(double diameter,double biteLength, double lengthOfStraightConnector) 
+        private void BuildNozzle(double diameter, double biteLength, double lengthOfStraightConnector, double lengthOfStraight, double widthOfAdjoiningPart)
         {
             var radius = diameter / 2;
             var x = 0.5;
@@ -89,15 +89,47 @@ namespace BiteBuilder
 
             var lengthExtrusion = biteLength - (biteLength / 5 + lengthOfStraightConnector);
             CreateExtrusion(sketchDef, lengthExtrusion, thin: false, side: true);
+
+            
+            double triangleLeg = Math.Sqrt(Math.Pow(lengthOfStraight, 2) - Math.Pow(radius - widthOfAdjoiningPart, 2));
+            double shiftVar = biteLength / 5 + lengthExtrusion;
+            var pointsTriangle = new List<Point>
+            {
+                new Point(widthOfAdjoiningPart, 0 - shiftVar),
+                new Point(y,0 - shiftVar),
+                new Point(y,triangleLeg - shiftVar),
+                new Point(0 - shiftVar,widthOfAdjoiningPart),
+                new Point(0 - shiftVar, y),
+                new Point(triangleLeg - shiftVar,y),
+            };
+
+            sketchDef = CreateSketch(Obj3dType.o3d_planeXOZ);
+            doc2d = (ksDocument2D)sketchDef.BeginEdit();
+            CreateTrianglesXO(pointsTriangle[0], pointsTriangle[1], pointsTriangle[2], doc2d);
+            sketchDef.EndEdit();
+            CutNozzle(sketchDef);
+
+            sketchDef = CreateSketch(Obj3dType.o3d_planeYOZ);
+            doc2d = (ksDocument2D)sketchDef.BeginEdit();
+            CreateTrianglesYO(pointsTriangle[3], pointsTriangle[4], pointsTriangle[5],  doc2d);
+            sketchDef.EndEdit();
+            CutNozzle(sketchDef);
         }
 
-
+        private void CutNozzle(ksSketchDefinition sketchDef) 
+        {
+            bool side = true;
+            for (int i = 0; i < 2; i++)
+            {
+                CreateСutExtrusion(sketchDef, side);
+                side = false;
+            }
+        }
         private ksSketchDefinition CreateSketch(Obj3dType planeType
         = Obj3dType.o3d_planeXOY,
         ksPlaneOffsetDefinition offsetPlane = null)
         {
             var plane = (ksEntity)_connector.Part.GetDefaultEntity((short)planeType);
-
             var sketch = (ksEntity)_connector.Part.
                 NewEntity((short)Obj3dType.o3d_sketch);
             ksSketchDefinition ksSketch = (ksSketchDefinition)sketch.
@@ -107,10 +139,8 @@ namespace BiteBuilder
             {
                 ksSketch.SetPlane(offsetPlane);
                 sketch.Create();
-
                 return ksSketch;
             }
-
             ksSketch.SetPlane(plane);
             sketch.Create();
             return ksSketch;
@@ -135,6 +165,26 @@ namespace BiteBuilder
             extrusionEntity.Create();
         }
 
+        private void CreateСutExtrusion(ksSketchDefinition sketchDef,
+           bool side = false)
+        {
+
+            ksObj3dTypeEnum type = ksObj3dTypeEnum.o3d_cutExtrusion;
+            var extrudeEntity =
+                (ksEntity)_connector.Part.NewEntity((short)type);
+            var extrudeDef =
+                (ksCutExtrusionDefinition)extrudeEntity.GetDefinition();
+            extrudeDef.SetSideParam(side, (short)End_Type.etThroughAll);
+
+            extrudeDef.directionType = side ?
+                (short)Direction_Type.dtNormal :
+                (short)Direction_Type.dtReverse;
+
+            extrudeDef.SetSketch(sketchDef);
+
+            extrudeEntity.Create();
+
+        }
         private void CreateRectangle(Point point1,
             Point point2, ksDocument2D document2D)
         {
@@ -146,6 +196,40 @@ namespace BiteBuilder
                 point2.X, -point2.Y, 1);
             document2D.ksLineSeg(point1.X, -point1.Y,
                 point1.X, -point2.Y, 1);
+        }
+
+        private void CreateTrianglesXO(Point point1,
+    Point point2, Point point3 ,ksDocument2D document2D)
+        {
+            document2D.ksLineSeg(point1.X, point1.Y,
+                point2.X, point2.Y, 1);
+            document2D.ksLineSeg(point2.X, point2.Y,
+               point3.X, point3.Y, 1);
+            document2D.ksLineSeg(point3.X, point3.Y,
+               point1.X, point1.Y, 1);
+            document2D.ksLineSeg(-point1.X, point1.Y,
+                -point2.X, point2.Y, 1);
+            document2D.ksLineSeg(-point2.X, point2.Y,
+               -point3.X, point3.Y, 1);
+            document2D.ksLineSeg(-point3.X, point3.Y,
+               -point1.X, point1.Y, 1);
+        }
+
+        private void CreateTrianglesYO(Point point1,
+    Point point2, Point point3, ksDocument2D document2D)
+        {
+            document2D.ksLineSeg(point1.X, point1.Y,
+                point2.X, point2.Y, 1);
+            document2D.ksLineSeg(point2.X, point2.Y,
+               point3.X, point3.Y, 1);
+            document2D.ksLineSeg(point3.X, point3.Y,
+               point1.X, point1.Y, 1);
+            document2D.ksLineSeg(point1.X, -point1.Y,
+                point2.X, -point2.Y, 1);
+            document2D.ksLineSeg(point2.X, -point2.Y,
+               point3.X, -point3.Y, 1);
+            document2D.ksLineSeg(point3.X, -point3.Y,
+               point1.X, -point1.Y, 1);
         }
         private ksPlaneOffsetDefinition CreateOffsetPlane(double offset, Obj3dType type)
         {
@@ -159,6 +243,7 @@ namespace BiteBuilder
 
             return offsetPlane;
         }
+
     }
 
 }
