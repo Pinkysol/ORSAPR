@@ -11,156 +11,120 @@ namespace BiteSDK
         private double _widthOfAdjoiningPart;
         private double _diameter;
         public Dictionary<Parameter, string> ErrorsDictionary { get; }
-    = new Dictionary<Parameter, string>();
-        static void Main ()
+            = new Dictionary<Parameter, string>();
+        public double BiteLength
         {
+            get => _biteLength;
 
-        }
-        public void SetValue(Parameter parameter, double value)
-        {
-            switch (parameter)
+            set
             {
-                case Parameter.BiteLength:
-                    {
-                        _biteLength = value;
-                        break;
-                    }
-                case Parameter.LengthOfStraight:
-                    {
-                        _lengthOfStraight = value;
-                        break;
-                    }
-                case Parameter.LengthOfStraightConnector:
-                    {
-                        _lengthOfStraightConnector = value;
-                        break;
-                    }
-                case Parameter.WidthOfAdjoiningPart:
-                    {
-                        _widthOfAdjoiningPart = value;
-                        break;
-                    }
-                case Parameter.Diameter:
-                    {
-                        _diameter = value;
-                        break;
-                    }
-
+                const double minValue = 25;
+                const double maxValue = 30;
+                SetValue(ref _biteLength, value,
+                    minValue, maxValue, Parameter.BiteLength);
             }
         }
-        public double GetBiteLength()
+        /// <summary>
+        /// установка значений по умолчанию 
+        /// для проектируемой 3D-модели стеллажа 
+        /// </summary>
+        public static BiteParameters DefaultParameters =>
+            new(25, 3, 15, 0.91, 5);
+        public double LengthOfStraight
         {
-            return this._biteLength;
-        }
-        public double GetLengthOfStraight()
-        {
-            return this._lengthOfStraight;
-        }
-        public double GetLengthOfStraightConnector()
-        {
-            return this._lengthOfStraightConnector;
-        }
-        public double GetWidthOfAdjoiningPart()
-        {
-            return this._widthOfAdjoiningPart;
-        }
-        public double GetDiameter()
-        {
-            return this._diameter;
-        }
-        public bool CheckParametersValue(Parameter parameter)
-        {
-            switch (parameter)
+            get => _lengthOfStraight;
+
+            set
             {
-                case Parameter.BiteLength:
-                    {
-                        if (this.GetBiteLength() < 25)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        if (this.GetBiteLength() > 30)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        return true;
-                    }
-
-                case Parameter.LengthOfStraight:
-                    {
-                        if (this.GetLengthOfStraight() < 3)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        if (this.GetLengthOfStraight() > 4)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        if (this.GetLengthOfStraight() > (2 * this.GetBiteLength()) / 15)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        if (this.GetLengthOfStraight() < (3 * this.GetBiteLength()) / 25)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        return true;
-                    }
-
-                case Parameter.LengthOfStraightConnector:
-                    {
-                        if (this.GetLengthOfStraightConnector() < 15)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        if (this.GetLengthOfStraightConnector() > 20)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        if (this.GetLengthOfStraightConnector() != this.GetBiteLength() - 10)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        return true;
-                    }
-                case Parameter.WidthOfAdjoiningPart:
-                    {
-                        if (this.GetWidthOfAdjoiningPart() < 0.91)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        if (this.GetWidthOfAdjoiningPart() > 0.95)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        return true;
-                    }
-                case Parameter.Diameter:
-                    {
-                        if (this.GetDiameter() < 5)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        if (this.GetDiameter() > 6)
-                        {
-                            throw new ArgumentException("incorrect value");
-                        }
-                        return true;
-                    }
-                default:
-                    {
-                        return false;
-                    }
+                SetValue(ref _lengthOfStraight, value, 3 * BiteLength / 25,
+                    2 * BiteLength / 15, Parameter.LengthOfStraight);
             }
         }
 
+        public double LengthOfStraightConnector
+        {
+            get => _lengthOfStraightConnector;
+
+            set
+            {
+                SetValue(ref _lengthOfStraightConnector, value,
+                    BiteLength - 10, BiteLength - 10, Parameter.LengthOfStraightConnector);
+            }
+        }
+
+        public double WidthOfAdjoiningPart
+        {
+            get => _widthOfAdjoiningPart;
+
+            set
+            {
+                const double minValue = 0.91;
+                const double maxValue = 0.95;
+                SetValue(ref _widthOfAdjoiningPart, value,
+                    minValue, maxValue, Parameter.WidthOfAdjoiningPart);
+            }
+        }
+        public double Diameter
+        {
+            get => _diameter;
+
+            set
+            {
+                const double minValue = 5;
+                const double maxValue = 6;
+                SetValue(ref _diameter, value, minValue, maxValue,
+                    Parameter.Diameter);
+            }
+        }
+
+        /// <summary>
+        /// Устанавливает значение в требуемое свойство
+        /// </summary>
+        /// <param name="field">Текущее свойство</param>
+        /// <param name="value">Текущее значение</param>
+        /// <param name="minValue">Минимальное значение</param>
+        /// <param name="maxValue">Максимальное значение</param>
+        /// <param name="parameter">Название параметра</param>
+        public void SetValue(ref double property, double value,
+            double minValue, double maxValue, Parameter parameter)
+        {
+            try
+            {
+                Validator.CheckParametersValue(minValue, maxValue,
+                    value, parameter);
+                property = value;
+            }
+            catch (Exception ex)
+            {
+                ErrorsDictionary.Add(parameter,
+                    ex.Message);
+            }
+        }
+        public BiteParameters(double biteLength, double lengthOfStraight,
+    double lengthOfStraightConnector, double widthOfAdjoiningPart, double diameter)
+        {
+            ErrorsDictionary.Clear();
+            BiteLength = biteLength;
+            LengthOfStraight = lengthOfStraight;
+            LengthOfStraightConnector = lengthOfStraightConnector;
+            WidthOfAdjoiningPart = widthOfAdjoiningPart;
+            Diameter = diameter;
+        }
     }
+
 
     public enum Parameter
     {
-        BiteLength = 1,
-        LengthOfStraight = 2,
-        LengthOfStraightConnector = 3,
-        WidthOfAdjoiningPart = 4,
-        Diameter = 5
+        /// <summary>
+        /// Длина биты
+        /// </summary>
+        BiteLength,
+        /// <summary>
+        /// Длина прямой части
+        /// </summary>
+        LengthOfStraight,
+        LengthOfStraightConnector,
+        WidthOfAdjoiningPart,
+        Diameter
     }
 }

@@ -83,7 +83,7 @@ namespace BiteUI
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(295, 15);
             this.label4.TabIndex = 8;
-            this.label4.Text = "Ширина прилегающей части носика S(мм) 0.91-0.95";
+            this.label4.Text = "Ширина прилегающей части носика S(мм) 0,91-0,95";
             // 
             // label5
             // 
@@ -102,7 +102,7 @@ namespace BiteUI
             this.Diameter.Name = "Diameter";
             this.Diameter.Size = new System.Drawing.Size(116, 23);
             this.Diameter.TabIndex = 4;
-            this.Diameter.TextChanged += new System.EventHandler(this.Diameter_TextChanged);
+            this.Diameter.Text = "5";
             // 
             // WidthOfAdjoiningPart
             // 
@@ -111,7 +111,7 @@ namespace BiteUI
             this.WidthOfAdjoiningPart.Name = "WidthOfAdjoiningPart";
             this.WidthOfAdjoiningPart.Size = new System.Drawing.Size(116, 23);
             this.WidthOfAdjoiningPart.TabIndex = 3;
-            this.WidthOfAdjoiningPart.TextChanged += new System.EventHandler(this.WidthOfAdjoiningPart_TextChanged);
+            this.WidthOfAdjoiningPart.Text = "0,91";
             // 
             // LengthOfStraightConnector
             // 
@@ -120,7 +120,7 @@ namespace BiteUI
             this.LengthOfStraightConnector.Name = "LengthOfStraightConnector";
             this.LengthOfStraightConnector.Size = new System.Drawing.Size(116, 23);
             this.LengthOfStraightConnector.TabIndex = 2;
-            this.LengthOfStraightConnector.TextChanged += new System.EventHandler(this.LengthOfStraightConnector_TextChanged);
+            this.LengthOfStraightConnector.Text = "15";
             // 
             // LengthOfStraight
             // 
@@ -129,7 +129,7 @@ namespace BiteUI
             this.LengthOfStraight.Name = "LengthOfStraight";
             this.LengthOfStraight.Size = new System.Drawing.Size(116, 23);
             this.LengthOfStraight.TabIndex = 1;
-            this.LengthOfStraight.TextChanged += new System.EventHandler(this.LengthOfStraight_TextChanged);
+            this.LengthOfStraight.Text = "3";
             // 
             // BiteLength
             // 
@@ -138,7 +138,7 @@ namespace BiteUI
             this.BiteLength.Name = "BiteLength";
             this.BiteLength.Size = new System.Drawing.Size(116, 23);
             this.BiteLength.TabIndex = 0;
-            this.BiteLength.TextChanged += new System.EventHandler(this.BiteLength_TextChanged);
+            this.BiteLength.Text = "25";
             // 
             // SchemeButton
             // 
@@ -149,7 +149,7 @@ namespace BiteUI
             this.SchemeButton.TabIndex = 11;
             this.SchemeButton.Text = "Схема";
             this.SchemeButton.UseVisualStyleBackColor = true;
-            this.SchemeButton.Click += new System.EventHandler(this.button1_Click);
+            this.SchemeButton.Click += new System.EventHandler(this.SchemeButton_Click);
             // 
             // toolTip1
             // 
@@ -164,7 +164,7 @@ namespace BiteUI
             this.BuildButton.TabIndex = 12;
             this.BuildButton.Text = "Построить";
             this.BuildButton.UseVisualStyleBackColor = true;
-            this.BuildButton.Click += new System.EventHandler(this.button2_Click);
+            this.BuildButton.Click += new System.EventHandler(this.BuildButton_Click);
             // 
             // MainForm
             // 

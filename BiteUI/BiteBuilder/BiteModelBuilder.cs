@@ -14,9 +14,9 @@ namespace BiteBuilder
         {
             _connector = new KompasConnector();
             _connector.GetNewPart();
-            BuildCylinder(parameters.GetBiteLength(), parameters.GetDiameter());
-            BuildHexagon(parameters.GetLengthOfStraightConnector(), parameters.GetDiameter());
-            BuildNozzle(parameters.GetDiameter(), parameters.GetBiteLength(), parameters.GetLengthOfStraightConnector(), parameters.GetLengthOfStraight(), parameters.GetWidthOfAdjoiningPart());
+            BuildCylinder(parameters.BiteLength, parameters.Diameter);
+            BuildHexagon(parameters.LengthOfStraightConnector, parameters.Diameter);
+            BuildNozzle(parameters.Diameter, parameters.BiteLength, parameters.LengthOfStraightConnector, parameters.LengthOfStraight, parameters.WidthOfAdjoiningPart);
         }
         private void BuildCylinder(double biteLength, double diameter)
         {
