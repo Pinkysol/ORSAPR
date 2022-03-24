@@ -12,7 +12,7 @@ namespace BiteUnitTest
             BiteParameters.DefaultParameters;
 
         #region [Positive tests]
-
+        //TODO: UTF8?
         [TestCase(25, Parameter.BiteLength,
             TestName = "Позитивный - ввод длины биты")]
         [TestCase(3, Parameter.LengthOfStraight,

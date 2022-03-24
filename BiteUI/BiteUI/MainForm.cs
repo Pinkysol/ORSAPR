@@ -6,6 +6,7 @@ using BiteBuilder;
 
 namespace BiteUI
 {
+    //TODO:
     public unsafe partial class MainForm : Form
     {
         /// <summary>
@@ -18,11 +19,13 @@ namespace BiteUI
         /// </summary>
         private BiteParameters _currentParameters =
             BiteParameters.DefaultParameters;
+
         public MainForm()
         {
             InitializeComponent();
 
         }
+        //TODO: XML
         /// <summary>
         /// Метод для парса строки в double
         /// <pama>В случае неудачного парса выбрасывает исключение</pama>
@@ -55,6 +58,7 @@ namespace BiteUI
         private void BuildButton_Click(object sender, EventArgs e)
         {
             _currentParameters =
+                //TODO: RSDN
                        new BiteParameters(
                            DoubleParse(BiteLength, Parameter.BiteLength),
                            DoubleParse(LengthOfStraight, Parameter.LengthOfStraight),
@@ -86,7 +90,7 @@ namespace BiteUI
                     );
                     return;
                 }
-
+                //TODO: RSDN
                 BiteModelBuilder _builder = new BiteModelBuilder();
                 _builder.Assembly(_currentParameters);
             }
@@ -95,7 +99,7 @@ namespace BiteUI
                 MessageBox.Show(ex.Message);
             }
         }
-
+        //TODO: XML
         private void SchemeButton_Click(object sender, EventArgs e)
         {
             var schemeForm = new SchemeForm();

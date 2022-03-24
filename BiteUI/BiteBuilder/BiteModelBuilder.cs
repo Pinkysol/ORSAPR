@@ -6,16 +6,23 @@ using System.Collections.Generic;
 
 namespace BiteBuilder
 {
+    //TODO: XML
     public class BiteModelBuilder
     {
+        //TODO:
         static void Main() { }
+
+        //TODO: XML
         private KompasConnector _connector;
+
+
         public void Assembly(BiteParameters parameters)
         {
             _connector = new KompasConnector();
             _connector.GetNewPart();
             BuildCylinder(parameters.BiteLength, parameters.Diameter);
             BuildHexagon(parameters.LengthOfStraightConnector, parameters.Diameter);
+            //TODO: RSDN
             BuildNozzle(parameters.Diameter, parameters.BiteLength, parameters.LengthOfStraightConnector, parameters.LengthOfStraight, parameters.WidthOfAdjoiningPart);
         }
         private void BuildCylinder(double biteLength, double diameter)

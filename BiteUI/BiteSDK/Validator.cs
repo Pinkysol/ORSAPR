@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BiteSDK
 {
+    //TODO: XML
     public static class Validator
     {
+        //TODO:
         /// <summary>
         /// Статический метод, выполняющий проверку на соответствие 
         /// значения заданного диапозону

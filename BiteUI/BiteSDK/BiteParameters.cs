@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace BiteSDK
 {
+    //TODO: XML
     public class BiteParameters
     {
         private double _biteLength;
@@ -36,6 +37,7 @@ namespace BiteSDK
 
             set
             {
+                //TODO:
                 SetValue(ref _lengthOfStraight, value, 3 * BiteLength / 25,
                     2 * BiteLength / 15, Parameter.LengthOfStraight);
             }
@@ -47,6 +49,7 @@ namespace BiteSDK
 
             set
             {
+                //TODO:
                 SetValue(ref _lengthOfStraightConnector, value,
                     BiteLength - 10, BiteLength - 10, Parameter.LengthOfStraightConnector);
             }
@@ -112,7 +115,7 @@ namespace BiteSDK
         }
     }
 
-
+    //TODO: RSDN
     public enum Parameter
     {
         /// <summary>
