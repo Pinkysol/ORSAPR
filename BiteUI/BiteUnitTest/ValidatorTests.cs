@@ -10,7 +10,6 @@ namespace BiteUnitTest
     [TestFixture]
     public class ValidatorTest
     {
-
         [TestCase(20, 25, 30,
             Parameter.BiteLength, TestName =
             "Негативный - ввод значений вне диапазона")]
