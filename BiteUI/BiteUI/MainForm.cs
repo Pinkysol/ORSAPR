@@ -20,18 +20,22 @@ namespace BiteUI
         private BiteParameters _currentParameters =
             BiteParameters.DefaultParameters;
 
+        /// <summary>
+        /// инициализация главной формы
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
 
         }
+
         //TODO: XML
         /// <summary>
         /// Метод для парса строки в double
         /// <pama>В случае неудачного парса выбрасывает исключение</pama>
         /// </summary>
-        /// <param name="data">Текст, который требуется спарсить</param>
-        /// <param name="parameterName">Текущий параметр</param>
+        /// <param name="textBox">Текст, который требуется спарсить</param>
+        /// <param name="parameter">Текущий параметр</param>
         /// <returns></returns>
         private double DoubleParse(TextBox textBox, Parameter parameter)
         {
@@ -48,9 +52,9 @@ namespace BiteUI
                     $" может содержать только цифры и запятую");
             }
         }
+
         /// <summary>
-        /// Обработчик события клик на кнопку Build,
-        /// устанавливает количество отводов и
+        /// Обработчик события клик на кнопку Build
         /// запускает процесс построения 3D модели
         /// </summary>
         /// <param name="sender"></param>
@@ -59,12 +63,12 @@ namespace BiteUI
         {
             _currentParameters =
                 //TODO: RSDN
-                       new BiteParameters(
-                           DoubleParse(BiteLength, Parameter.BiteLength),
-                           DoubleParse(LengthOfStraight, Parameter.LengthOfStraight),
-                           DoubleParse(LengthOfStraightConnector, Parameter.LengthOfStraightConnector),
-                           DoubleParse(WidthOfAdjoiningPart, Parameter.WidthOfAdjoiningPart),
-                           DoubleParse(Diameter, Parameter.Diameter));
+            new BiteParameters(
+            DoubleParse(BiteLength, Parameter.BiteLength),
+            DoubleParse(LengthOfStraight, Parameter.LengthOfStraight),
+            DoubleParse(LengthOfStraightConnector, Parameter.LengthOfStraightConnector),
+            DoubleParse(WidthOfAdjoiningPart, Parameter.WidthOfAdjoiningPart),
+            DoubleParse(Diameter, Parameter.Diameter));
             try
             {
                 if (_currentParameters.ErrorsDictionary.Count != 0)
@@ -91,15 +95,19 @@ namespace BiteUI
                     return;
                 }
                 //TODO: RSDN
-                BiteModelBuilder _builder = new BiteModelBuilder();
-                _builder.Assembly(_currentParameters);
+                BiteModelBuilder _biteModelBuilder = new BiteModelBuilder();
+                _biteModelBuilder.Assembly(_currentParameters);
             }
             catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+
         //TODO: XML
+        /// <summary>
+        /// вызов схемы проектируемой 3D-модели
+        /// </summary>
         private void SchemeButton_Click(object sender, EventArgs e)
         {
             var schemeForm = new SchemeForm();

@@ -14,13 +14,12 @@ namespace BiteUnitTest
         [TestCase(20, 25, 30,
             Parameter.BiteLength, TestName =
             "Негативный - ввод значений вне диапазона")]
-        public void Validator_SetNegative(int incorrectValue,
-            int minValue, int maxValue, Parameter parametersType)
+        public void Validator_SetNegative(double incorrectValue,
+            double minValue, double maxValue, Parameter parametersType)
         {
 
             Assert.Throws<ArgumentException>(() =>
-                    Validator.CheckParametersValue
-                        (minValue, maxValue,
+                    BiteParameters.CheckParametersValue(minValue, maxValue,
                             incorrectValue, parametersType),
                 $"Значение высоты стеллажа введено неверно.");
 
@@ -29,11 +28,11 @@ namespace BiteUnitTest
         [TestCase(26, 25, 30,
             Parameter.BiteLength, TestName =
             "Позитивный - ввод значений в диапазоне")]
-        public void Validator_SetPositive(int correctValue,
-            int minValue, int maxValue, Parameter parametersType)
+        public void Validator_SetPositive(double correctValue,
+            double minValue, double maxValue, Parameter parametersType)
         {
             Assert.DoesNotThrow(() =>
-                Validator.CheckParametersValue(minValue, maxValue,
+                BiteParameters.CheckParametersValue(minValue, maxValue,
                 correctValue, parametersType),
                 $"значение вышло за пределы");
         }

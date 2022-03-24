@@ -4,15 +4,51 @@ using System.Collections.Generic;
 namespace BiteSDK
 {
     //TODO: XML
+    /// <summary>
+    /// публичный класс предназначенный для хранения 
+    /// и выполнения валидации нижнего уровня
+    /// </summary>
     public class BiteParameters
     {
+        /// <summary>
+        /// Длина биты
+        /// <summary>
         private double _biteLength;
+        /// <summary>
+        /// Длина прямой части
+        /// <summary>
         private double _lengthOfStraight;
+        /// <summary>
+        /// Длина прямой соединительной части
+        /// <summary>
         private double _lengthOfStraightConnector;
+        /// <summary>
+        /// Ширина прилегающей части носика
+        /// <summary>
         private double _widthOfAdjoiningPart;
+        /// <summary>
+        /// Диаметр
+        /// <summary>
         private double _diameter;
+        /// <summary>
+        /// словарь для хранения ошибок ввода
+        /// </summary>
         public Dictionary<Parameter, string> ErrorsDictionary { get; }
             = new Dictionary<Parameter, string>();
+
+        /// <summary>
+        /// установка значений по умолчанию 
+        /// для проектируемой 3D-модели биты
+        /// </summary>
+        public static BiteParameters DefaultParameters =>
+            new(25, 3, 15, 0.91, 5);
+
+
+        /// <summary>
+        /// свойство обрабатывающее поле 
+        /// Длины биты,
+        /// содержит валидацию допустимых значений 
+        /// </summary>
         public double BiteLength
         {
             get => _biteLength;
@@ -25,12 +61,12 @@ namespace BiteSDK
                     minValue, maxValue, Parameter.BiteLength);
             }
         }
+
         /// <summary>
-        /// установка значений по умолчанию 
-        /// для проектируемой 3D-модели стеллажа 
+        /// свойство обрабатывающее поле 
+        /// Длины прямой части,
+        /// содержит валидацию допустимых значений 
         /// </summary>
-        public static BiteParameters DefaultParameters =>
-            new(25, 3, 15, 0.91, 5);
         public double LengthOfStraight
         {
             get => _lengthOfStraight;
@@ -38,11 +74,18 @@ namespace BiteSDK
             set
             {
                 //TODO:
-                SetValue(ref _lengthOfStraight, value, 3 * BiteLength / 25,
-                    2 * BiteLength / 15, Parameter.LengthOfStraight);
+                const double minMultipiler = 3 / 25;
+                const double maxMultipiler = 2 / 15;
+                SetValue(ref _lengthOfStraight, value, minMultipiler * BiteLength,
+                    maxMultipiler * BiteLength, Parameter.LengthOfStraight);
             }
         }
 
+        /// <summary>
+        /// свойство обрабатывающее поле 
+        /// Длины прямой соединительной части,
+        /// содержит валидацию допустимых значений 
+        /// </summary>
         public double LengthOfStraightConnector
         {
             get => _lengthOfStraightConnector;
@@ -50,11 +93,17 @@ namespace BiteSDK
             set
             {
                 //TODO:
+                const int range = 10;
                 SetValue(ref _lengthOfStraightConnector, value,
-                    BiteLength - 10, BiteLength - 10, Parameter.LengthOfStraightConnector);
+                    BiteLength - range, BiteLength - range, Parameter.LengthOfStraightConnector);
             }
         }
 
+        /// <summary>
+        /// свойство обрабатывающее поле 
+        /// Ширины прилегающей части носика,
+        /// содержит валидацию допустимых значений 
+        /// </summary>
         public double WidthOfAdjoiningPart
         {
             get => _widthOfAdjoiningPart;
@@ -67,6 +116,12 @@ namespace BiteSDK
                     minValue, maxValue, Parameter.WidthOfAdjoiningPart);
             }
         }
+
+        /// <summary>
+        /// свойство обрабатывающее поле 
+        /// Диаметра,
+        /// содержит валидацию допустимых значений 
+        /// </summary>
         public double Diameter
         {
             get => _diameter;
@@ -83,7 +138,7 @@ namespace BiteSDK
         /// <summary>
         /// Устанавливает значение в требуемое свойство
         /// </summary>
-        /// <param name="field">Текущее свойство</param>
+        /// <param name="property">зачение которое будет занесено</param>
         /// <param name="value">Текущее значение</param>
         /// <param name="minValue">Минимальное значение</param>
         /// <param name="maxValue">Максимальное значение</param>
@@ -93,7 +148,7 @@ namespace BiteSDK
         {
             try
             {
-                Validator.CheckParametersValue(minValue, maxValue,
+                CheckParametersValue(minValue, maxValue,
                     value, parameter);
                 property = value;
             }
@@ -103,6 +158,17 @@ namespace BiteSDK
                     ex.Message);
             }
         }
+
+        /// <summary>
+        /// конструктор класса, присваивающий значения
+        /// </summary>
+        /// <param name="biteLength">Длина биты</param>
+        /// <param name="lengthOfStraight">Длина прямой части</param>
+        /// <param name="lengthOfStraightConnector">Длина прямой 
+        /// соединительной части</param>
+        /// <param name="widthOfAdjoiningPart">Ширина прилегающей 
+        /// части носика</param>
+        /// <param name="diameter">Диаметр</param>
         public BiteParameters(double biteLength, double lengthOfStraight,
     double lengthOfStraightConnector, double widthOfAdjoiningPart, double diameter)
         {
@@ -112,6 +178,28 @@ namespace BiteSDK
             LengthOfStraightConnector = lengthOfStraightConnector;
             WidthOfAdjoiningPart = widthOfAdjoiningPart;
             Diameter = diameter;
+        }
+        /// <summary>
+        /// Статический метод, выполняющий проверку на соответствие 
+        /// значения заданного диапозону
+        /// <para> Если значение не прошло валидацию, выбрасывает
+        /// исключение </para>
+        /// </summary>
+        /// <param name="minValue">Минималное значение</param>
+        /// <param name="maxValue">Максимальное значение</param>
+        /// <param name="value">Текущее значение</param>
+        /// <param name="parameter">Проверяемый параметр</param>
+        ///  /// <exception cref="ArgumentException">исключение вызываемое при 
+        /// несоответсвии заданного значения диапазону</exception>
+        public static void CheckParametersValue(double minValue,
+            double maxValue, double value, Parameter parameter)
+        {
+            if (value < minValue || value > maxValue)
+            {
+                throw new ArgumentException
+                    ($"Значение параметра {parameter}" +
+                    $" не вошло в диапазон");
+            }
         }
     }
 
@@ -126,8 +214,17 @@ namespace BiteSDK
         /// Длина прямой части
         /// </summary>
         LengthOfStraight,
+        /// <summary>
+        /// Длина прямой соединительной части
+        /// </summary>
         LengthOfStraightConnector,
+        /// <summary>
+        /// Ширина прилегающей части носика
+        /// </summary>
         WidthOfAdjoiningPart,
+        /// <summary>
+        /// Диаметр
+        /// </summary>
         Diameter
     }
 }
