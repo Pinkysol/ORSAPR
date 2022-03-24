@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BiteBuilder", "BiteBuilder\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BiteSDK", "BiteSDK\BiteSDK.csproj", "{DBB1FEDC-132C-4870-8872-C2C336290892}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BiteUnitTest", "BiteUnitTest\BiteUnitTest.csproj", "{F5650D9B-2535-4430-8D9D-227A75E846E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BiteUnitTest", "BiteUnitTest\BiteUnitTest.csproj", "{F5650D9B-2535-4430-8D9D-227A75E846E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
