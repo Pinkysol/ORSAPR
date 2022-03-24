@@ -21,7 +21,6 @@ namespace BiteUnitTest
                     BiteParameters.CheckParametersValue(minValue, maxValue,
                             incorrectValue, parametersType),
                 $"Значение высоты стеллажа введено неверно.");
-
         }
 
         [TestCase(26, 25, 30,
