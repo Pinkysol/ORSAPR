@@ -5,6 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <StartupObject />
     <ApplicationIcon />
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

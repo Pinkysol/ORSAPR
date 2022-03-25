@@ -41,7 +41,7 @@ namespace BiteSDK
         /// для проектируемой 3D-модели биты
         /// </summary>
         public static BiteParameters DefaultParameters =>
-            new(25, 3, 15, 0.91, 5);
+            new BiteParameters(25, 3, 15, 0.91, 5);
 
 
         /// <summary>
