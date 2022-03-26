@@ -74,10 +74,10 @@ namespace BiteSDK
             set
             {
                 //TODO:
-                const double minMultipiler = 3;
-                const double maxMultipiler = 4;
-                SetValue(ref _lengthOfStraight, value, minMultipiler,
-                    maxMultipiler, Parameter.LengthOfStraight);
+                const double minMultipiler = 3/25;
+                const double maxMultipiler = 4/30;
+                SetValue(ref _lengthOfStraight, value, BiteLength*minMultipiler,
+                    BiteLength/maxMultipiler, Parameter.LengthOfStraight);
             }
         }
 
